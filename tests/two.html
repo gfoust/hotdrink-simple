@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>HotDrink Test</title>
+    <script type="text/javascript" src="../hotdrink.js"></script>
+    <script type="text/javascript">
+      var m;
+      function init() {
+        m= hd.model( {start: 25, end: 35, length: undefined} );
+        m.constraint( [m.start, m.end, m.length] )
+          .method( m.start, function() {
+            return this.end - this.length;
+          } )
+          .method( m.end, function() {
+            return this.start + this.length;
+          } )
+          .method( m.length, function() {
+            return this.end - this.start;
+          } );
+
+        var start= new hd.NumberEdit( document.getElementById( 'start' ) );
+        m.start.subscribe( start );
+        start.subscribe( m.start );
+
+        var end= new hd.NumberEdit( document.getElementById( 'end' ) );
+        m.end.subscribe( end );
+        end.subscribe( m.end );
+
+        var length= new hd.NumberEdit( document.getElementById( 'length' ) );
+        m.length.subscribe( length );
+        length.subscribe( m.length );
+
+      }
+    </script>
+  </head>
+  <body onload="init()">
+    <h1>Hello, world!</h1>
+    <p>
+      Start: <input type="text" id="start"/>
+    </p>
+    <p>
+      End: <input type="text" id="end"/>
+    </p>
+    <p>
+      Length: <input type="text" id="length"/>
+    </p>
+  </body>
+</html>

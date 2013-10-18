@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <title>HotDrink Test</title>
+    <script type="text/javascript" src="../hotdrink.js"></script>
+    <script type="text/javascript">
+var m;
+function init() {
+  m= hd.model( {left: 0, top: 0, right: undefined, bottom: undefined,
+                width: 200, height: 200, aspect: undefined} );
+
+  m.constraint( m.left, m.right, m.width )
+    .method( m.left, function() { return this.width - this.right; } )
+    .method( m.right, function() { return this.left + this.width; } )
+    .method( m.width, function() { return this.right - this.left; } );
+
+  m.constraint( m.top, m.bottom, m.height )
+    .method( m.top, function() { return this.height - this.bottom; } )
+    .method( m.bottom, function() { return this.top + this.height; } )
+    .method( m.height, function() { return this.bottom - this.top; } );
+
+  m.constraint( m.width, m.height, m.aspect )
+    .method( m.width, function() { return this.height * this.aspect; } )
+    .method( m.height, function() { return this.width / this.aspect; } )
+    .method( m.aspect, function() { return this.width / this.height; } );
+
+  var left= new hd.NumberEdit( document.getElementById( 'left' ) );
+  m.left.subscribe( left );
+  left.subscribe( m.left );
+
+  var right= new hd.NumberEdit( document.getElementById( 'right' ) );
+  m.right.subscribe( right );
+  right.subscribe( m.right );
+
+  var top= new hd.NumberEdit( document.getElementById( 'top' ) );
+  m.top.subscribe( top );
+  top.subscribe( m.top );
+
+  var bottom= new hd.NumberEdit( document.getElementById( 'bottom' ) );
+  m.bottom.subscribe( bottom );
+  bottom.subscribe( m.bottom );
+
+  var width= new hd.NumberEdit( document.getElementById( 'width' ) );
+  m.width.subscribe( width );
+  width.subscribe( m.width );
+
+  var height= new hd.NumberEdit( document.getElementById( 'height' ) );
+  m.height.subscribe( height );
+  height.subscribe( m.height );
+
+  var aspect= new hd.NumberEdit( document.getElementById( 'aspect' ) );
+  m.aspect.subscribe( aspect );
+  aspect.subscribe( m.aspect );
+}
+    </script>
+  </head>
+  <body onload="init()">
+    <table>
+      <tr>
+        <td>Left:</td>
+        <td><input type="text" id="left"/></td>
+        <td>Right:</td>
+        <td><input type="text" id="right"/></td>
+        <td>Width:</td>
+        <td><input type="text" id="width"/></td>
+        <td rowspan="2">Aspect:</td>
+        <td rowspan="2"><input type="text" id="aspect"/></td>
+      </tr>
+      <tr>
+        <td>Top:</td>
+        <td><input type="text" id="top"/></td>
+        <td>Bottom:</td>
+        <td><input type="text" id="bottom"/></td>
+        <td>Height:</td>
+        <td><input type="text" id="height"/></td>
+      </tr>
+    </table>
+  </body>
+</html>

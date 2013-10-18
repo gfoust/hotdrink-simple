@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>HotDrink Test</title>
+    <script type="text/javascript" src="../hotdrink.js"></script>
+    <script type="text/javascript">
+      function init() {
+        var m= new hd.Model( {v: "hello"} );
+
+        var foo= new hd.TextEdit( document.getElementById( 'foo' ) );
+        m.v.subscribe( foo );
+        foo.subscribe( m.v );
+
+        var goo= new hd.TextEdit( document.getElementById( 'goo' ) );
+        m.v.subscribe( goo );
+        goo.subscribe( m.v );
+
+        var bar= new hd.Text( document.getElementById( 'bar' ) );
+        m.v.subscribe( bar );
+      }
+    </script>
+  </head>
+  <body onload="init()">
+    <h1>Hello, world!</h1>
+    <input type="text" id="foo"/>
+    <span style="width:5em">&nbsp;</span>
+    <input type="text" id="goo"/>
+    <p id="bar"></p>
+  </body>
+</html>
