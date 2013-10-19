@@ -1,19 +1,5 @@
 m4_divert(`-1') # Prevent m4 from including this file in the output
 
-# Define the macros in JavaScript in case m4 is not available. This will allow
-# the macro-littered code to parse as JavaScript, but there are no gaurantees
-# that any of the macros will be meaningful.
-*/
-var noop = function () {};
-var namespace = noop;
-var LOG = noop;
-var ASSERT = noop;
-var ERROR = noop;
-var WARNING = noop;
-var DEBUG_BEGIN;
-var DEBUG_END;
-/*
-
 # Note that this file defines the macros using the default m4 quoting `like so'
 # However, within the macros themselves we quote <{like so}>.
 # We do this because at the end of the file we'll change the quotes to <{ and }>

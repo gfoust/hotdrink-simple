@@ -45,11 +45,11 @@ $(TREEDIRS) : | $(OBJDIR)/$(NSDEFS)
 	$(AT)mkdir -p $@
 	$(AT)printf "hd._.%s= new hd._.ns.Namespace();\n" $(subst /,.,$(patsubst $(OBJDIR)/%,%,$@)) >>$(OBJDIR)/$(NSDEFS);
 
-$(OBJDIR)/$(NSDEFS) : $(SRCDIR)/$(MACRODEFS) $(SRCDIR)/$(NSDEFS) | $(OBJDIR)
+$(OBJDIR)/$(NSDEFS) : $(MACRODEFS) $(SRCDIR)/$(NSDEFS) | $(OBJDIR)
 	$(AT)$(INITOBJ) $(patsubst $(OBJDIR)/%, %, $@) > $@
 	$(AT)m4 $(M4FLAGS) $^ >> $@
 
-$(OBJECTS) : $(OBJDIR)/% : $(SRCDIR)/$(MACRODEFS) $(SRCDIR)/% | $(TREEDIRS)
+$(OBJECTS) : $(OBJDIR)/% : $(MACRODEFS) $(SRCDIR)/% | $(TREEDIRS)
 	$(AT)$(INITOBJ) $(patsubst $(OBJDIR)/%, %, $@) > $@
 	$(AT)m4 $(M4FLAGS) $^ >> $@
 	$(AT)printf "\n" >> $@
