@@ -4,17 +4,17 @@
     <script type="text/javascript" src="../hotdrink.js"></script>
     <script type="text/javascript">
       function init() {
-        var m= new hd.Model( {v: "hello"} );
+        var m= hd.model( {v: "hello"} );
 
-        var foo= new hd.TextEdit( document.getElementById( 'foo' ) );
+        var foo= new hd.binders.edit( document.getElementById( 'foo' ) );
         m.v.subscribe( foo );
         foo.subscribe( m.v );
 
-        var goo= new hd.TextEdit( document.getElementById( 'goo' ) );
+        var goo= new hd.binders.edit( document.getElementById( 'goo' ) );
         m.v.subscribe( goo );
         goo.subscribe( m.v );
 
-        var bar= new hd.Text( document.getElementById( 'bar' ) );
+        var bar= new hd.binders.text( document.getElementById( 'bar' ) );
         m.v.subscribe( bar );
       }
     </script>

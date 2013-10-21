@@ -23,31 +23,31 @@ function init() {
     .method( 'height', function() { return this.width / this.aspect; } )
     .method( 'aspect', function() { return this.width / this.height; } );
 
-  var left= new hd.NumberEdit( document.getElementById( 'left' ) );
+  var left= new hd.binders.number( document.getElementById( 'left' ) );
   m.left.subscribe( left );
   left.subscribe( m.left );
 
-  var right= new hd.NumberEdit( document.getElementById( 'right' ) );
+  var right= new hd.binders.number( document.getElementById( 'right' ) );
   m.right.subscribe( right );
   right.subscribe( m.right );
 
-  var top= new hd.NumberEdit( document.getElementById( 'top' ) );
+  var top= new hd.binders.number( document.getElementById( 'top' ) );
   m.top.subscribe( top );
   top.subscribe( m.top );
 
-  var bottom= new hd.NumberEdit( document.getElementById( 'bottom' ) );
+  var bottom= new hd.binders.number( document.getElementById( 'bottom' ) );
   m.bottom.subscribe( bottom );
   bottom.subscribe( m.bottom );
 
-  var width= new hd.NumberEdit( document.getElementById( 'width' ) );
+  var width= new hd.binders.number( document.getElementById( 'width' ) );
   m.width.subscribe( width );
   width.subscribe( m.width );
 
-  var height= new hd.NumberEdit( document.getElementById( 'height' ) );
+  var height= new hd.binders.number( document.getElementById( 'height' ) );
   m.height.subscribe( height );
   height.subscribe( m.height );
 
-  var aspect= new hd.NumberEdit( document.getElementById( 'aspect' ) );
+  var aspect= new hd.binders.number( document.getElementById( 'aspect' ) );
   m.aspect.subscribe( aspect );
   aspect.subscribe( m.aspect );
 }

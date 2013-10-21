@@ -10,16 +10,14 @@
           return this.end - this.start;
         } );
 
-        var start= new hd.NumberEdit( document.getElementById( 'start' ) );
-        m.start.subscribe( start );
-        start.subscribe( m.start );
+        var start= new hd.binders.number( document.getElementById( 'start' ) );
+        start.bind( m.start );
 
-        var end= new hd.NumberEdit( document.getElementById( 'end' ) );
-        m.end.subscribe( end );
-        end.subscribe( m.end );
+        var end= new hd.binders.number( document.getElementById( 'end' ) );
+        end.bind( m.end );
 
-        var length= new hd.Text( document.getElementById( 'length' ) );
-        m.length.subscribe( length );
+        var length= new hd.binders.text( document.getElementById( 'length' ) );
+        length.bind( m.length );
       }
     </script>
   </head>

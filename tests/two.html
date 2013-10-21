@@ -17,15 +17,15 @@
             return this.end - this.start;
           } );
 
-        var start= new hd.NumberEdit( document.getElementById( 'start' ) );
+        var start= new hd.binders.number( document.getElementById( 'start' ) );
         m.start.subscribe( start );
         start.subscribe( m.start );
 
-        var end= new hd.NumberEdit( document.getElementById( 'end' ) );
+        var end= new hd.binders.number( document.getElementById( 'end' ) );
         m.end.subscribe( end );
         end.subscribe( m.end );
 
-        var length= new hd.NumberEdit( document.getElementById( 'length' ) );
+        var length= new hd.binders.number( document.getElementById( 'length' ) );
         m.length.subscribe( length );
         length.subscribe( m.length );
 
