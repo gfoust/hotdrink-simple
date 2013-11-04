@@ -5,7 +5,7 @@
     <script type="text/javascript">
       var m;
       function init() {
-        m= hd.model( {start: 25, end: 35, length: undefined} );
+        m= hd.makeModel( {start: 25, end: 35, length: undefined} );
         m.constraint( [m.start, m.end, m.length] )
           .method( m.start, function() {
             return this.end - this.length;

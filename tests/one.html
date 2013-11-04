@@ -4,7 +4,7 @@
     <script type="text/javascript" src="../hotdrink.js"></script>
     <script type="text/javascript">
       function init() {
-        var m= hd.model( {v: "hello"} );
+        var m= hd.makeModel( {v: "hello"} );
 
         var foo= new hd.binders.edit( document.getElementById( 'foo' ) );
         m.v.subscribe( foo );

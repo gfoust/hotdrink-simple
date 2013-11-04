@@ -5,8 +5,8 @@
     <script type="text/javascript">
 var m;
 function init() {
-  m= hd.model( {left: 0, top: 0, right: undefined, bottom: undefined,
-                width: 200, height: 200, aspect: undefined} );
+  m= hd.makeModel( {left: 0, top: 0, right: undefined, bottom: undefined,
+                    width: 200, height: 200, aspect: undefined} );
 
   m.constraint( 'left', 'right', 'width' )
     .method( 'left', function() { return this.width - this.right; } )

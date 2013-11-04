@@ -3,11 +3,18 @@
     <title>HotDrink Test</title>
     <script type="text/javascript" src="../hotdrink.js"></script>
     <script type="text/javascript">
+      function reportLength() {
+        alert( "The length is " + this.length );
+      }
+
       var m;
       function init() {
-        m= hd.model( {start: 25, end: 35} );
+        m= hd.makeModel( {start: 25, end: 35} );
         m.computed( 'length', ['start', 'end'], function() {
           return this.end - this.start;
+        } );
+        m.computed( 'report', ['length'], function() {
+          return hd.makeCommand( reportLength, {length: this.length} );
         } );
 
         var start= new hd.binders.number( document.getElementById( 'start' ) );
@@ -18,6 +25,9 @@
 
         var length= new hd.binders.text( document.getElementById( 'length' ) );
         length.bind( m.length );
+
+        var report= new hd.binders.command( document.getElementById( 'report' ) );
+        report.bind( m.report );
       }
     </script>
   </head>
@@ -31,6 +41,9 @@
     </p>
     <p>
       Length: <span id="length"></span>
+    </p>
+    <p>
+      <button id="report">Report</button>
     </p>
   </body>
 </html>
