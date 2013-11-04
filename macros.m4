@@ -5,19 +5,42 @@ m4_divert(`-1') # Prevent m4 from including this file in the output
 # We do this because at the end of the file we'll change the quotes to <{ and }>
 # These character sequences are much less likely to occur in JavaScript code
 
-m4_define(`m4_convert_to_namespace',`m4_translit(m4_regexp($1,<{lib\(/.*\)?/[^/]*}>,<{hd/_\1}>),<{/}>,<{.}>)')
+m4_define(`m4_convert_to_namespace',`m4_translit(m4_regexp($1,<{lib\(/.*\)?/[^/]*}>,<{hd\1}>),<{/}>,<{.}>)')
 
 m4_define(`m4_module',`(function () {m4_divert(<{4}>)
 }).apply( m4_convert_to_namespace( m4___file__ ) );m4_divert(<{0}>)')
 
-m4_define(`m4_import',`var m4_regexp($1,<{\([^.]*\)$}>,<{\1}>)= hd._.$1;m4_ifelse(<{$#}>,<{1}>,<{}>,<{
-$0(m4_shift($*))}>)')
+m4_define(`m4_foreach',`
+m4_ifelse($2,<{}>,<{}>,<{$1($2)$0(<{$1}>,m4_shift(m4_shift($*)))}>)')
+
+m4_define(`m4_import1s',`m4_regexp($1,<{\([^.]*\)$}>,<{var \1= hd.$1;}>)')
+
+m4_define(`m4_import1r',`m4_regexp($1,<{\([^ ]+\) +as +\([^ ]+\)}>,<{var \2= hd.\1}>)')
+
+m4_define(`m4_import1',`m4_ifelse(m4_regexp($1,<{ as }>),<{-1}>,<{m4_import1s($1)}>,<{m4_import1r($1)}>)')
+
+m4_define(`m4_import',`m4_foreach(<{m4_import1}>,$*)')
+
+m4_define(`m4_export1s',`m4_regexp($1,<{\([^.]*\)$}>,<{this.\1= $1}>);')
+
+m4_define(`m4_export1r',`m4_regexp($1,<{\([^ ]+\) +as +\([^ ]+\)}>,<{this.\2= \1;}>)')
+
+m4_define(`m4_export1',`m4_ifelse(m4_regexp($1,<{ as }>),<{-1}>,<{m4_export1s($1)}>,<{m4_export1r($1)}>)')
 
 m4_define(`m4_export',`m4_divert(<{3}>)
-this.$1= $1;m4_divert(<{0}>)m4_ifelse(<{$#}>,<{1}>,<{}>,<{$0(m4_shift($*))}>)')
+m4_foreach(<{m4_export1}>,$*)m4_divert(<{0}>)')
+
+m4_define(`m4_rexport1s', `m4_regexp($1,<{\([^.]*\)$}>,<{this.\1= hd.$1;}>)')
+
+m4_define(`m4_rexport1r', `m4_regexp($1,<{\([^ ]+\) +as +\([^ ]+\)}>,<{this.\2= hd.\1;}>)')
+
+m4_define(`m4_rexport1', `m4_ifelse(m4_regexp($1,<{ as }>),<{-1}>,<{m4_rexport1s($1)}>,<{m4_rexport1r($1)}>)')
+
+m4_define(`m4_rexport', `m4_divert(<{3}>)
+m4_foreach(<{m4_rexport1}>,$*)m4_divert(<{0}>)')
 
 m4_define(`m4_export_api',`m4_divert(<{2}>)
-hd.m4_ifelse($2,<{}>,m4_regexp($1,<{\([^.]*\)$}>,<{\1}>),$2)= hd._.$1;m4_divert(<{0}>)')
+hd.m4_ifelse($2,<{}>,m4_regexp($1,<{\([^.]*\)$}>,<{\1}>),$2)= hd.$1;m4_divert(<{0}>)')
 
 m4_define(`m4_method', `var __$1__$2= m4_divert(<{1}>)
 Object.defineProperty( $1.prototype, "$2", {value: __$1__$2} );m4_divert(<{0}>)')

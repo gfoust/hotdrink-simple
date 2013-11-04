@@ -43,7 +43,7 @@ $(OBJDIR) :
 
 $(TREEDIRS) : | $(OBJDIR)/$(NSDEFS)
 	$(AT)mkdir -p $@
-	$(AT)printf "hd._.%s= new hd._.ns.Namespace();\n" $(subst /,.,$(patsubst $(OBJDIR)/%,%,$@)) >>$(OBJDIR)/$(NSDEFS);
+	$(AT)printf "hd.%s= new hd.ns.Namespace();\n" $(subst /,.,$(patsubst $(OBJDIR)/%,%,$@)) >>$(OBJDIR)/$(NSDEFS);
 
 $(OBJDIR)/$(NSDEFS) : $(MACRODEFS) $(SRCDIR)/$(NSDEFS) | $(OBJDIR)
 	$(AT)$(INITOBJ) $(patsubst $(OBJDIR)/%, %, $@) > $@
