@@ -42,7 +42,7 @@ m4_foreach(<{m4_rexport1}>,$*)m4_divert(<{0}>)')
 m4_define(`m4_export_api',`m4_divert(<{2}>)
 hd.m4_ifelse($2,<{}>,m4_regexp($1,<{\([^.]*\)$}>,<{\1}>),$2)= hd.$1;m4_divert(<{0}>)')
 
-m4_define(`m4_method', `var __$1__$2= m4_divert(<{1}>)
+m4_define(`m4_member', `var __$1__$2= m4_divert(<{1}>)
 Object.defineProperty( $1.prototype, "$2", {value: __$1__$2} );m4_divert(<{0}>)')
 
 m4_define(`m4_debug_define', `m4_define(`$1',`m4_ifdef(<{DEBUG}>,<{$2}>,)')')
