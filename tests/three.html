@@ -9,7 +9,7 @@ function init() {
                     width: 200, height: 200, aspect: undefined} );
 
   m.constraint( 'left', 'right', 'width' )
-    .method( 'left', function() { return this.width - this.right; } )
+    .method( 'left', function() { return this.right - this.width; } )
     .method( 'right', function() { return this.left + this.width; } )
     .method( 'width', function() { return this.right - this.left; } );
 
@@ -23,33 +23,19 @@ function init() {
     .method( 'height', function() { return this.width / this.aspect; } )
     .method( 'aspect', function() { return this.width / this.height; } );
 
-  var left= new hd.binders.number( document.getElementById( 'left' ) );
-  m.left.subscribe( left );
-  left.subscribe( m.left );
+  hd.binders.number( document.getElementById( 'left' ), m.left );
 
-  var right= new hd.binders.number( document.getElementById( 'right' ) );
-  m.right.subscribe( right );
-  right.subscribe( m.right );
+  hd.binders.number( document.getElementById( 'right' ), m.right );
 
-  var top= new hd.binders.number( document.getElementById( 'top' ) );
-  m.top.subscribe( top );
-  top.subscribe( m.top );
+  hd.binders.number( document.getElementById( 'top' ), m.top );
 
-  var bottom= new hd.binders.number( document.getElementById( 'bottom' ) );
-  m.bottom.subscribe( bottom );
-  bottom.subscribe( m.bottom );
+  hd.binders.number( document.getElementById( 'bottom' ), m.bottom );
 
-  var width= new hd.binders.number( document.getElementById( 'width' ) );
-  m.width.subscribe( width );
-  width.subscribe( m.width );
+  hd.binders.number( document.getElementById( 'width' ), m.width );
 
-  var height= new hd.binders.number( document.getElementById( 'height' ) );
-  m.height.subscribe( height );
-  height.subscribe( m.height );
+  hd.binders.number( document.getElementById( 'height' ), m.height );
 
-  var aspect= new hd.binders.number( document.getElementById( 'aspect' ) );
-  m.aspect.subscribe( aspect );
-  aspect.subscribe( m.aspect );
+  hd.binders.number( document.getElementById( 'aspect' ), m.aspect );
 }
     </script>
   </head>

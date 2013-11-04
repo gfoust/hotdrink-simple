@@ -6,16 +6,11 @@
       function init() {
         var m= hd.makeModel( {v: "hello"} );
 
-        var foo= new hd.binders.edit( document.getElementById( 'foo' ) );
-        m.v.subscribe( foo );
-        foo.subscribe( m.v );
+        hd.binders.edit( document.getElementById( 'foo' ), m.v );
 
-        var goo= new hd.binders.edit( document.getElementById( 'goo' ) );
-        m.v.subscribe( goo );
-        goo.subscribe( m.v );
+        hd.binders.edit( document.getElementById( 'goo' ), m.v );
 
-        var bar= new hd.binders.text( document.getElementById( 'bar' ) );
-        m.v.subscribe( bar );
+        hd.binders.text( document.getElementById( 'bar' ), m.v );
       }
     </script>
   </head>

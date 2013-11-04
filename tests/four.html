@@ -17,17 +17,13 @@
           return hd.makeCommand( reportLength, {length: this.length} );
         } );
 
-        var start= new hd.binders.number( document.getElementById( 'start' ) );
-        start.bind( m.start );
+        hd.binders.number( document.getElementById( 'start' ), m.start );
 
-        var end= new hd.binders.number( document.getElementById( 'end' ) );
-        end.bind( m.end );
+        hd.binders.number( document.getElementById( 'end' ), m.end );
 
-        var length= new hd.binders.text( document.getElementById( 'length' ) );
-        length.bind( m.length );
+        hd.binders.text( document.getElementById( 'length' ), m.length );
 
-        var report= new hd.binders.command( document.getElementById( 'report' ) );
-        report.bind( m.report );
+        hd.binders.command( document.getElementById( 'report' ), m.report );
       }
     </script>
   </head>

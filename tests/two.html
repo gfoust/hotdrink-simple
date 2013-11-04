@@ -17,17 +17,11 @@
             return this.end - this.start;
           } );
 
-        var start= new hd.binders.number( document.getElementById( 'start' ) );
-        m.start.subscribe( start );
-        start.subscribe( m.start );
+        hd.binders.number( document.getElementById( 'start' ), m.start );
 
-        var end= new hd.binders.number( document.getElementById( 'end' ) );
-        m.end.subscribe( end );
-        end.subscribe( m.end );
+        hd.binders.number( document.getElementById( 'end' ), m.end );
 
-        var length= new hd.binders.number( document.getElementById( 'length' ) );
-        m.length.subscribe( length );
-        length.subscribe( m.length );
+        hd.binders.number( document.getElementById( 'length' ), m.length );
 
       }
     </script>
