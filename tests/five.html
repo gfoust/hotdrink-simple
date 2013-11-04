@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>HotDrink Test</title>
+    <script type="text/javascript" src="../hotdrink.js"></script>
+    <script type="text/javascript">
+var m;
+function init() {
+  m= hd.makeModel( {left: 0, top: 0, right: undefined, bottom: undefined,
+                    width: 200, height: 200, aspect: undefined} );
+
+  m.constraint( 'left', 'right', 'width' )
+    .method( 'left', function() { return this.right - this.width; } )
+    .method( 'right', function() { return this.left + this.width; } )
+    .method( 'width', function() { return this.right - this.left; } );
+
+  m.constraint( 'top', 'bottom', 'height' )
+    .method( 'top', function() { return this.height - this.bottom; } )
+    .method( 'bottom', function() { return this.top + this.height; } )
+    .method( 'height', function() { return this.bottom - this.top; } );
+
+  m.constraint( 'width', 'height', 'aspect' )
+    .method( 'width', function() { return this.height * this.aspect; } )
+    .method( 'height', function() { return this.width / this.aspect; } )
+    .method( 'aspect', function() { return this.width / this.height; } );
+
+  hd.bind();
+}
+    </script>
+  </head>
+  <body onload="init()">
+    <table>
+      <tr>
+        <td>Left:</td>
+        <td><input type="text" data-bind="number: m.left"/></td>
+        <td>Right:</td>
+        <td><input type="text" data-bind="number: m.right"/></td>
+        <td>Width:</td>
+        <td><input type="text" data-bind="number: m.width"/></td>
+        <td rowspan="2">Aspect:</td>
+        <td rowspan="2"><input type="text" data-bind="number: m.aspect"/></td>
+      </tr>
+      <tr>
+        <td>Top:</td>
+        <td><input type="text" data-bind="number: m.top"/></td>
+        <td>Bottom:</td>
+        <td><input type="text" data-bind="number: m.bottom"/></td>
+        <td>Height:</td>
+        <td><input type="text" data-bind="number: m.height"/></td>
+      </tr>
+    </table>
+  </body>
+</html>
