@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <title>HotDrink Test</title>
+    <script type="text/javascript" src="hotdrink.js"></script>
+    <script type="text/javascript">
+function calcLeft() {
+  return this.right - this.width;
+}
+
+function calcRight() {
+  return this.left + this.width;
+}
+
+function calcWidth() {
+  return this.right - this.left;
+}
+
+function calcTop() {
+  return this.height - this.bottom;
+}
+
+function calcBottom() {
+  return this.top + this.height;
+}
+
+function calcHeight() {
+  return this.bottom - this.top;
+}
+
+function calcWidthAspect() {
+  return this.height * this.aspect;
+}
+
+function calcHeightAspect() {
+  return this.width / this.aspect;
+}
+
+function calcAspect() {
+  return this.width / this.height;
+}
+
+var m;
+function init() {
+  m= hd.makeModel( {left: 0, top: 0, right: undefined, bottom: undefined,
+                    width: 200, height: 200, aspect: undefined} );
+
+  m.constraint( 'left', 'right', 'width' )
+    .method( 'left', calcLeft )
+    .method( 'right', calcRight )
+    .method( 'width', calcWidth );
+
+  m.constraint( 'top', 'bottom', 'height' )
+    .method( 'top', calcTop )
+    .method( 'bottom', calcBottom )
+    .method( 'height', calcHeight );
+
+  m.constraint( 'width', 'height', 'aspect' )
+    .method( 'width', calcWidthAspect )
+    .method( 'height', calcHeightAspect )
+    .method( 'aspect', calcAspect );
+
+  hd.bind();
+
+  hd.runSync();
+}
+    </script>
+  </head>
+  <body onload="init()">
+    <table>
+      <tr>
+        <td>Left:</td>
+        <td><input type="text" data-bind="number: m.left"/></td>
+        <td>Right:</td>
+        <td><input type="text" data-bind="number: m.right"/></td>
+        <td>Width:</td>
+        <td><input type="text" data-bind="number: m.width"/></td>
+        <td rowspan="2">Aspect:</td>
+        <td rowspan="2"><input type="text" data-bind="number: m.aspect"/></td>
+      </tr>
+      <tr>
+        <td>Top:</td>
+        <td><input type="text" data-bind="number: m.top"/></td>
+        <td>Bottom:</td>
+        <td><input type="text" data-bind="number: m.bottom"/></td>
+        <td>Height:</td>
+        <td><input type="text" data-bind="number: m.height"/></td>
+      </tr>
+    </table>
+  </body>
+</html>
