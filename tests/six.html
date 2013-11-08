@@ -12,6 +12,8 @@ function calcRight() {
 }
 
 function calcWidth() {
+  var m= Math.random() * 1000000000;
+  for (var i= 0; i < m; ++i);
   return this.right - this.left;
 }
 
@@ -28,6 +30,8 @@ function calcHeight() {
 }
 
 function calcWidthAspect() {
+  var m= Math.random() * 1000000000;
+  for (var i= 0; i < m; ++i);
   return this.height * this.aspect;
 }
 
@@ -61,29 +65,33 @@ function init() {
 
   hd.bind();
 
-  hd.runSync();
+  //hd.runSync();
 }
     </script>
+    <style type="text/css">
+      .pending { background: #aaa; }
+      .source{ border: 2px solid #339; }
+    </style>
   </head>
   <body onload="init()">
     <table>
       <tr>
         <td>Left:</td>
-        <td><input type="text" data-bind="number: m.left"/></td>
+        <td><input type="text" data-bind="number: m.left, css: m.left"/></td>
         <td>Right:</td>
-        <td><input type="text" data-bind="number: m.right"/></td>
+        <td><input type="text" data-bind="number: m.right, css: m.right"/></td>
         <td>Width:</td>
-        <td><input type="text" data-bind="number: m.width"/></td>
+        <td><input type="text" data-bind="number: m.width, css: m.width"/></td>
         <td rowspan="2">Aspect:</td>
-        <td rowspan="2"><input type="text" data-bind="number: m.aspect"/></td>
+        <td rowspan="2"><input type="text" data-bind="number: m.aspect, css: m.aspect"/></td>
       </tr>
       <tr>
         <td>Top:</td>
-        <td><input type="text" data-bind="number: m.top"/></td>
+        <td><input type="text" data-bind="number: m.top, css: m.top"/></td>
         <td>Bottom:</td>
-        <td><input type="text" data-bind="number: m.bottom"/></td>
+        <td><input type="text" data-bind="number: m.bottom, css: m.bottom"/></td>
         <td>Height:</td>
-        <td><input type="text" data-bind="number: m.height"/></td>
+        <td><input type="text" data-bind="number: m.height, css: m.height"/></td>
       </tr>
     </table>
   </body>
