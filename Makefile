@@ -2,9 +2,10 @@ include Makefile.config
 
 MAIN := $(TITLE).js
 
-OBJECTS  := $(addprefix $(OBJDIR)/, $(SOURCES))
-SOURCES  := $(addprefix $(SRCDIR)/, $(SOURCES))
-TREEDIRS := $(filter-out $(OBJDIR)/, $(sort $(dir $(OBJECTS))))
+OBJECTS   := $(addprefix $(OBJDIR)/, $(SOURCES))
+SOURCES   := $(addprefix $(SRCDIR)/, $(SOURCES))
+TREEDIRS  := $(filter-out $(OBJDIR)/, $(sort $(dir $(OBJECTS))))
+TESTFILES := $(patsubst support/%.js, $(TESTDIR)/%.js, $(SUPPORT))
 
 v := 0
 V := $(v)
@@ -21,22 +22,23 @@ INITOBJ := printf "\n"
 
 debug : M4FLAGS += -DDEBUG
 debug : INITOBJ := printf "\n/* %s */\n"
-debug : $(MAIN)
+debug : $(MAIN) tests
 
-all : $(MAIN)
+release : $(MAIN) tests
 
-release : $(MAIN)
+.PHONY : tests
+tests : $(TESTFILES) $(TESTDIR)/$(MAIN)
 
 $(TITLE) : $(MAIN)
 
 $(MAIN) : $(OBJDIR)/$(NSDEFS) $(OBJECTS)
 	$(AT)cat $^ > $@
 
-# $(OBJDIR)/$(NSDEFS) : | $(TREEDIRS)
-# 	printf "" >$(OBJDIR)/$(NSDEFS)
-# 	for d in $(subst /,.,$(patsubst %/,%,$(TREEDIRS))); do \
-# 		printf "hd.%s= hd.namespace();\n" $$d >>$(OBJDIR)/$(NSDEFS); \
-# 	done
+$(TESTDIR)/$(MAIN) : $(MAIN)
+	$(AT)cp $< $@
+
+$(TESTFILES) : $(TESTDIR)/%.js : support/%.js
+	$(AT)cp $< $@
 
 $(OBJDIR) :
 	$(AT)mkdir -p $@
@@ -54,6 +56,8 @@ $(OBJECTS) : $(OBJDIR)/% : $(MACRODEFS) $(SRCDIR)/% | $(TREEDIRS)
 	$(AT)m4 $(M4FLAGS) $^ >> $@
 	$(AT)printf "\n" >> $@
 
+.PHONY: clean
 clean:
 	$(AT)rm -f $(MAIN)
 	$(AT)rm -rf $(OBJDIR)
+	$(AT)rm -f $(TESTFILES) $(TESTDIR)/$(MAIN)

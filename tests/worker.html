@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Debug Worker</title>
+    <script type="text/javascript">
+self= {listeners: {}};
+
+self.addEventListener= function( tag, fn ) {
+  if (this.listeners[tag]) {
+    this.listeners[tag].push( fn );
+  }
+  else {
+    this.listeners[tag]= [fn];
+  }
+};
+
+self.postMessage= function( data ) {
+  alert( JSON.stringify( data ) );
+}
+
+self.startWorker= function() {
+  var fn= document.getElementById( 'fn' ).value;
+  var context= document.getElementById( 'context' ).value;
+  this.listeners.message.forEach( function( listener ) {
+    listener( {data: {fn: fn, context: JSON.parse( context )}} );
+  } );
+}
+    </script>
+    <script type="text/javascript" src="worker.js"></script>
+  </head>
+  <body>
+    <textarea id="fn" rows="10" cols="100">function() {
+  return this.right - this.left;
+}</textarea>
+    <p></p>
+    <textarea id="context" rows="10" cols="100">{"right": 25,
+ "left": 10,
+ "color": "blue"
+}</textarea>
+    <p></p>
+    <button onclick="self.startWorker()">Do It</button>
+  </body>
+</html>

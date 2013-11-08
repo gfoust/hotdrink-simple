@@ -1,2 +1,4 @@
-objects
-hotdrink.js
+/objects
+/hotdrink.js
+/tests/hotdrink.js
+/tests/worker.js
