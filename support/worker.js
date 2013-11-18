@@ -5,7 +5,7 @@ function getter( context, used, key ) {
   };
 }
 
-function run( fn, context ) {
+function execute( fn, context ) {
   var used= {};
   var proxy= {};
 
@@ -31,5 +31,5 @@ self.addEventListener( 'message', function( event ) {
                           fnstr.lastIndexOf( '}' ) );
   var fn= new Function( fnstr );
 
-  self.postMessage( run( fn, event.data.context ) );
+  self.postMessage( execute( fn, event.data.context ) );
 } );
