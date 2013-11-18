@@ -30,7 +30,7 @@ function calcHeight() {
 }
 
 function calcWidthAspect() {
-  var m= Math.random() * 1000000000;
+  var m= Math.random() * 4000000000;
   for (var i= 0; i < m; ++i);
   return this.height * this.aspect;
 }
@@ -48,24 +48,26 @@ function init() {
   m= hd.makeModel( {left: 0, top: 0, right: undefined, bottom: undefined,
                     width: 200, height: 200, aspect: undefined} );
 
-  m.constraint( 'left', 'right', 'width' )
-    .method( 'left', calcLeft )
-    .method( 'right', calcRight )
-    .method( 'width', calcWidth );
+  var cns= m.constraint( ['left', 'right', 'width'] );
+  m.method( cns, 'left', calcLeft );
+  m.method( cns, 'right', calcRight );
+  m.method( cns, 'width', calcWidth );
 
-  m.constraint( 'top', 'bottom', 'height' )
-    .method( 'top', calcTop )
-    .method( 'bottom', calcBottom )
-    .method( 'height', calcHeight );
+  cns= m.constraint( ['top', 'bottom', 'height'] );
+  m.method( cns, 'top', calcTop );
+  m.method( cns, 'bottom', calcBottom );
+  m.method( cns, 'height', calcHeight );
 
-  m.constraint( 'width', 'height', 'aspect' )
-    .method( 'width', calcWidthAspect )
-    .method( 'height', calcHeightAspect )
-    .method( 'aspect', calcAspect );
+  cns= m.constraint( ['width', 'height', 'aspect'] );
+  m.method( cns, 'width', calcWidthAspect );
+  m.method( cns, 'height', calcHeightAspect );
+  m.method( cns, 'aspect', calcAspect );
+
+  hd.register( m );
 
   hd.bind();
 
-  //hd.runSync();
+  hd.forceAsync();
 }
     </script>
     <style type="text/css">

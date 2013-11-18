@@ -5,14 +5,7 @@ function getter( context, used, key ) {
   };
 }
 
-self.addEventListener( 'message', function( event ) {
-
-  var fnstr= event.data.fn;
-  fnstr= fnstr.substring( fnstr.indexOf( '{' ) + 1,
-                          fnstr.lastIndexOf( '}' ) );
-  var fn= new Function( fnstr );
-
-  var context= event.data.context;
+function run( fn, context ) {
   var used= {};
   var proxy= {};
 
@@ -22,7 +15,21 @@ self.addEventListener( 'message', function( event ) {
                             get: getter( context, used, key )} );
   }
 
-  var result= fn.call( proxy );
+  try {
+    var result= fn.call( proxy );
+    return {used: used, result: result};
+  }
+  catch (e) {
+    return {used: used, error: error};
+  }
+}
 
-  self.postMessage( {used: used, result: result} );
+self.addEventListener( 'message', function( event ) {
+
+  var fnstr= event.data.fn;
+  fnstr= fnstr.substring( fnstr.indexOf( '{' ) + 1,
+                          fnstr.lastIndexOf( '}' ) );
+  var fn= new Function( fnstr );
+
+  self.postMessage( run( fn, event.data.context ) );
 } );
