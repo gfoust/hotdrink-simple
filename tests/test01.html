@@ -4,13 +4,13 @@
     <script type="text/javascript" src="hotdrink.js"></script>
     <script type="text/javascript">
       function init() {
-        var m= hd.makeModel( {v: "hello"} );
+        var v= new hd.model.Variable( 'v', "hello" );
 
-        hd.binders.edit( document.getElementById( 'foo' ), m.v );
+        hd.binders.edit( document.getElementById( 'foo' ), v );
 
-        hd.binders.edit( document.getElementById( 'goo' ), m.v );
+        hd.binders.edit( document.getElementById( 'goo' ), v );
 
-        hd.binders.text( document.getElementById( 'bar' ), m.v );
+        hd.binders.text( document.getElementById( 'bar' ), v );
       }
     </script>
   </head>

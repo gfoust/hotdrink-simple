@@ -3,27 +3,25 @@
     <title>HotDrink Test</title>
     <script type="text/javascript" src="hotdrink.js"></script>
     <script type="text/javascript">
-      var m;
       function init() {
-        m= hd.makeModel( {start: 25, end: 35, length: undefined} );
-        var cns= m.constraint( [m.start, m.end, m.length] );
-        m.method( cns, 'start', function() {
-          return this.end - this.length;
-        } );
-        m.method( cns, 'end', function() {
-          return this.start + this.length;
-        } );
-        m.method( cns, 'length', function() {
-          return this.end - this.start;
-        } );
+        hd.builder
+          .variables( {start: 25, end: 35, length: undefined} )
+          .constraint( ['start', 'end', 'length'] )
+          .method( 'start', function() {
+            return this.end - this.length;
+          } )
+          .method( 'end', function() {
+            return this.start + this.length;
+          } )
+          .method( 'length', function() {
+            return this.end - this.start;
+          } );
 
-        hd.binders.number( document.getElementById( 'start' ), m.start );
+        hd.binders.number( document.getElementById( 'start' ), hd.m.start );
 
-        hd.binders.number( document.getElementById( 'end' ), m.end );
+        hd.binders.number( document.getElementById( 'end' ), hd.m.end );
 
-        hd.binders.number( document.getElementById( 'length' ), m.length );
-
-        hd.register( m );
+        hd.binders.number( document.getElementById( 'length' ), hd.m.length );
       }
     </script>
   </head>

@@ -45,25 +45,24 @@ function calcAspect() {
 
 var m;
 function init() {
-  m= hd.makeModel( {left: 0, top: 0, right: undefined, bottom: undefined,
-                    width: 200, height: 200, aspect: undefined} );
+  hd.builder
+    .variables( {left: 0, top: 0, right: undefined, bottom: undefined,
+                 width: 200, height: 200, aspect: undefined} )
 
-  var cns= m.constraint( ['left', 'right', 'width'] );
-  m.method( cns, 'left', calcLeft );
-  m.method( cns, 'right', calcRight );
-  m.method( cns, 'width', calcWidth );
+    .constraint( ['left', 'right', 'width'] )
+    .method( 'left', calcLeft )
+    .method( 'right', calcRight )
+    .method( 'width', calcWidth )
 
-  cns= m.constraint( ['top', 'bottom', 'height'] );
-  m.method( cns, 'top', calcTop );
-  m.method( cns, 'bottom', calcBottom );
-  m.method( cns, 'height', calcHeight );
+    .constraint( ['top', 'bottom', 'height'] )
+    .method( 'top', calcTop )
+    .method( 'bottom', calcBottom )
+    .method( 'height', calcHeight )
 
-  cns= m.constraint( ['width', 'height', 'aspect'] );
-  m.method( cns, 'width', calcWidthAspect );
-  m.method( cns, 'height', calcHeightAspect );
-  m.method( cns, 'aspect', calcAspect );
-
-  hd.register( m );
+    .constraint( ['width', 'height', 'aspect'] )
+    .method( 'width', calcWidthAspect )
+    .method( 'height', calcHeightAspect )
+    .method( 'aspect', calcAspect )
 
   hd.bind();
 
@@ -82,21 +81,21 @@ function init() {
     <table>
       <tr>
         <td>Left:</td>
-        <td><input type="text" data-bind="number: m.left, css: m.left"/></td>
+        <td><input type="text" data-bind="number: left, css: left"/></td>
         <td>Right:</td>
-        <td><input type="text" data-bind="number: m.right, css: m.right"/></td>
+        <td><input type="text" data-bind="number: right, css: right"/></td>
         <td>Width:</td>
-        <td><input type="text" data-bind="number: m.width, css: m.width"/></td>
+        <td><input type="text" data-bind="number: width, css: width"/></td>
         <td rowspan="2">Aspect:</td>
-        <td rowspan="2"><input type="text" data-bind="number: m.aspect, css: m.aspect"/></td>
+        <td rowspan="2"><input type="text" data-bind="number: aspect, css: aspect"/></td>
       </tr>
       <tr>
         <td>Top:</td>
-        <td><input type="text" data-bind="number: m.top, css: m.top"/></td>
+        <td><input type="text" data-bind="number: top, css: top"/></td>
         <td>Bottom:</td>
-        <td><input type="text" data-bind="number: m.bottom, css: m.bottom"/></td>
+        <td><input type="text" data-bind="number: bottom, css: bottom"/></td>
         <td>Height:</td>
-        <td><input type="text" data-bind="number: m.height, css: m.height"/></td>
+        <td><input type="text" data-bind="number: height, css: height"/></td>
       </tr>
     </table>
   </body>

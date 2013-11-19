@@ -5,25 +5,25 @@
     <script type="text/javascript">
 var m;
 function init() {
-  m= hd.makeModel( {left: 0, top: 0, right: undefined, bottom: undefined,
-                    width: 200, height: 200, aspect: undefined} );
+  hd.builder
+    .model( 'dim' )
+    .variables( {left: 0, top: 0, right: undefined, bottom: undefined,
+                 width: 200, height: 200, aspect: undefined} )
 
-  var cns= m.constraint( ['left', 'right', 'width'] );
-  m.method( cns, 'left', function() { return this.right - this.width; } );
-  m.method( cns, 'right', function() { return this.left + this.width; } );
-  m.method( cns, 'width', function() { return this.right - this.left; } );
+    .constraint( ['left', 'right', 'width'] )
+    .method( 'left', function() { return this.right - this.width; } )
+    .method( 'right', function() { return this.left + this.width; } )
+    .method( 'width', function() { return this.right - this.left; } )
 
-  cns= m.constraint( ['top', 'bottom', 'height'] );
-  m.method( cns, 'top', function() { return this.height - this.bottom; } );
-  m.method( cns, 'bottom', function() { return this.top + this.height; } );
-  m.method( cns, 'height', function() { return this.bottom - this.top; } );
+    .constraint( ['top', 'bottom', 'height'] )
+    .method( 'top', function() { return this.height - this.bottom; } )
+    .method( 'bottom', function() { return this.top + this.height; } )
+    .method( 'height', function() { return this.bottom - this.top; } )
 
-  cns= m.constraint( ['width', 'height', 'aspect'] );
-  m.method( cns, 'width', function() { return this.height * this.aspect; } );
-  m.method( cns, 'height', function() { return this.width / this.aspect; } );
-  m.method( cns, 'aspect', function() { return this.width / this.height; } );
-
-  hd.register( m );
+    .constraint( ['width', 'height', 'aspect'] )
+    .method( 'width', function() { return this.height * this.aspect; } )
+    .method( 'height', function() { return this.width / this.aspect; } )
+    .method( 'aspect', function() { return this.width / this.height; } );
 
   hd.bind();
 }
@@ -37,21 +37,21 @@ function init() {
     <table>
       <tr>
         <td>Left:</td>
-        <td><input type="text" data-bind="number: m.left"/></td>
+        <td><input type="text" data-bind="number: dim.left"/></td>
         <td>Right:</td>
-        <td><input type="text" data-bind="number: m.right"/></td>
+        <td><input type="text" data-bind="number: dim.right"/></td>
         <td>Width:</td>
-        <td><input type="text" data-bind="number: m.width"/></td>
+        <td><input type="text" data-bind="number: dim.width"/></td>
         <td rowspan="2">Aspect:</td>
-        <td rowspan="2"><input type="text" data-bind="number: m.aspect"/></td>
+        <td rowspan="2"><input type="text" data-bind="number: dim.aspect"/></td>
       </tr>
       <tr>
         <td>Top:</td>
-        <td><input type="text" data-bind="number: m.top"/></td>
+        <td><input type="text" data-bind="number: dim.top"/></td>
         <td>Bottom:</td>
-        <td><input type="text" data-bind="number: m.bottom"/></td>
+        <td><input type="text" data-bind="number: dim.bottom"/></td>
         <td>Height:</td>
-        <td><input type="text" data-bind="number: m.height"/></td>
+        <td><input type="text" data-bind="number: dim.height"/></td>
       </tr>
     </table>
   </body>
