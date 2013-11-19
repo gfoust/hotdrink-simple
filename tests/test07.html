@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>HotDrink Test</title>
+    <script type="text/javascript" src="hotdrink.js"></script>
+    <script type="text/javascript">
+  function init() {
+    hd.builder
+      .variables( {a: undefined, b: 20, c: 100} )
+
+      .constraint( ['a', 'b', 'c'] )
+      .method( ['b', 'c'], function() {
+        for (var i= 0; i < 4000000000; ++i);
+        var half= Math.floor( this.a/2 )
+        return [half, this.a - half];
+      }, hd.async )
+      .method( 'a', function() {
+        for (var i= 0; i < 400000000; ++i);
+        return this.c - this.b;
+      }, hd.async );
+
+    hd.bind();
+  }
+    </script>
+    <style type="text/css">
+      .pending, .pending.source { background: #ccc; }
+      .source  { background: #ffc; }
+    </style>
+  </head>
+  <body onload="init()">
+    <p>
+      Memory cell test.  Setting A writes (slowly) to both B and C; setting B
+      or C writes to A.
+    </p>
+    <table>
+      <tr>
+        <td>&nbsp;</td>
+        <td>B: <input type="text" data-bind="number: b, css: b"/></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>A: <input type="text" data-bind="number: a, css: a"></td>
+        <td>&nbsp;</td>
+        <td>C: <input type="text" data-bind="number: c, css: c"></td>
+      </tr>
+    </table>
+  </body>
+</html>

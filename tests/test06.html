@@ -12,7 +12,7 @@ function calcRight() {
 }
 
 function calcWidth() {
-  var m= Math.random() * 1000000000;
+  var m= 2000000000 + (Math.random() * 2000000000);
   for (var i= 0; i < m; ++i);
   return this.right - this.left;
 }
@@ -30,7 +30,7 @@ function calcHeight() {
 }
 
 function calcWidthAspect() {
-  var m= Math.random() * 4000000000;
+  var m= 2000000000 + (Math.random() * 2000000000);
   for (var i= 0; i < m; ++i);
   return this.height * this.aspect;
 }
@@ -70,8 +70,8 @@ function init() {
 }
     </script>
     <style type="text/css">
-      .pending { background: #aaa; }
-      .source{ border: 2px solid #339; }
+      .pending { background: #ccc; }
+      .source  { background: #ffc; }
     </style>
   </head>
   <body onload="init()">
