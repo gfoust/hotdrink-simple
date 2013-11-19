@@ -39,7 +39,8 @@ m4_define(`m4_rexport1', `m4_ifelse(m4_regexp($1,<{ as }>),<{-1}>,<{m4_rexport1s
 m4_define(`m4_rexport', `m4_divert(<{3}>)
 m4_foreach(<{m4_rexport1}>,$*)m4_divert(<{0}>)')
 
-m4_define(`m4_extend', `$1.prototype= new $2();')
+m4_define(`m4_extend', `$1.prototype= new $2();
+$1.prototype.constructor= $1;')
 
 m4_define(`m4_member', `var __$1__$2= m4_divert(<{1}>)
 Object.defineProperty( $1.prototype, "$2", {value: __$1__$2, writable: true} );m4_divert(<{0}>)')
