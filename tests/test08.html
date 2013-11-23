@@ -5,18 +5,31 @@
     <script type="text/javascript">
   function init() {
     hd.builder
-      .variables( {a: undefined, b: 20, c: 100} )
+      .variables( {a: undefined, b: undefined, c: 100, d: 10} )
 
       .constraint( ['a', 'b', 'c'] )
-      .method( ['b', 'c'], function() {
+      .method( 'split', ['b', 'c'], function() {
         for (var i= 0; i < 4000000000; ++i);
         var half= Math.floor( this.a/2 )
         return [half, this.a - half];
       }, hd.async )
-      .method( 'a', function() {
-        for (var i= 0; i < 400000000; ++i);
-        return this.c + this.b;
-      }, hd.async );
+      .method( 'copy', 'a', function() {
+        var m= Math.random() * 4000000000;
+        for (var i= 0; i < m; ++i);
+        return this.c - this.b;
+      }, hd.async )
+
+      .constraint( ['b', 'd'] )
+      .method( 'counter', 'b', function() {
+        for (var i= 1; i < this.d; ++i) {
+          hd.notify( i );
+          for (var j= 0; j < 800000000; ++j);
+        }
+        return i;
+      }, hd.async )
+      .method( 'd', function() {
+        return this.b;
+      } );
 
     hd.bind();
   }
@@ -28,10 +41,13 @@
   </head>
   <body onload="init()">
     <p>
-      Memory cell test.  Setting A writes (slowly) to both B and C; setting B
-      or C writes to A.
     </p>
     <table>
+      <tr>
+        <td>&nbsp;</td>
+        <td>D: <input type="text" data-bind="number: d, css: d"/></td>
+        <td>&nbsp;</td>
+      </tr>
       <tr>
         <td>&nbsp;</td>
         <td>B: <input type="text" data-bind="number: b, css: b"/></td>
@@ -42,6 +58,7 @@
         <td>&nbsp;</td>
         <td>C: <input type="text" data-bind="number: c, css: c"></td>
       </tr>
+    </table>
     </table>
   </body>
 </html>
