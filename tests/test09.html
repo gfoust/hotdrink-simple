@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <title>HotDrink Test</title>
+    <script type="text/javascript" src="hotdrink.js"></script>
+    <script type="text/javascript">
+  function init() {
+    hd.builder
+      .variables( {a: undefined, amax: 10,
+                   b: undefined, bmax: 10,
+                   c: undefined, cmax: 10} )
+
+      .constraint( ['a', 'amax'] )
+      .method( 'a', function a_count() {
+        for (var i= 1; i < this.amax; ++i) {
+          hd.notify( i );
+          for (var j= 0; j < 4000000000; ++j);
+        }
+        return i;
+      }, hd.async )
+
+      .constraint( ['a', 'b', 'bmax'] )
+      .method( 'b', function b_count() {
+        for (var i= 1; i < this.bmax; ++i) {
+          hd.notify( this.a + '-' + i );
+          for (var j= 0; j < 1000000000; ++j);
+        }
+        return this.a + '-' + i;
+      }, hd.async )
+
+      .constraint( ['b', 'c', 'cmax'] )
+      .method( 'c', function c_count() {
+        for (var i= 1; i < this.cmax; ++i) {
+          hd.notify( this.b + '-' + i );
+          for (var j= 0; j < 200000000; ++j);
+        }
+        return this.b + '-' + i;
+      }, hd.async )
+
+    hd.bind();
+  }
+    </script>
+    <style type="text/css">
+      .pending, .pending.source { background: #ccc; }
+      .source  { background: #ffc; }
+    </style>
+  </head>
+  <body onload="init()">
+    <p>
+      Notification test.  A sends notifications to B which sends notifications to C.
+    </p>
+    <table>
+      <tr>
+        <td>A: <input type="text" data-bind="number: amax"/></td>
+        <td>B: <input type="text" data-bind="number: bmax"/></td>
+        <td>C: <input type="text" data-bind="number: cmax"/></td>
+      </tr>
+      <tr>
+        <td><span data-bind="text: a"></span></td>
+        <td><span data-bind="text: b"></span></td>
+        <td><span data-bind="text: c"></span></td>
+      </tr>
+    </table>
+    </table>
+  </body>
+</html>
