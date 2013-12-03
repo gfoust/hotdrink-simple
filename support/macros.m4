@@ -48,21 +48,21 @@ Object.defineProperty( $1.prototype, "$2", {value: __$1__$2, writable: true} );m
 m4_define(`m4_debug_define', `m4_define(`$1',`m4_ifdef(<{DEBUG}>,<{$2}>,)')')
 m4_define(`m4_ndebug_define',`m4_define(`$1',`m4_ifdef(<{DEBUG}>,,<{$2}>)')')
 
-m4_debug_define(`LOG',`m4_ifdef(<{LOG_}>m4_regexp(<{$1}>,<{\([a-zA-Z]+\)}>,<{\1}>),<{window.console.log("m4___file__:m4___line__: " + m4_shift($*));}>)')
+m4_debug_define(`LOG',`m4_ifdef(<{LOG_}>m4_regexp(<{$1}>,<{\([a-zA-Z]+\)}>,<{\1}>),<{window.console.log("m4___file__:m4___line__: " + (m4_shift($*)));}>)')
 
 m4_ndebug_define(`DEBUG_BEGIN',`m4_divert(<{-1}>)')
 m4_ndebug_define(`DEBUG_END',`m4_divert(<{0}>)')
 
 m4_debug_define(`INSPECT',`window.console.dir($*);')
 
-m4_debug_define( `WARNING',`window.console.warning("m4___file__:m4___line__: " + $*);')
+m4_debug_define( `WARNING',`window.console.warning("m4___file__:m4___line__: " + ($*));')
 
 m4_debug_define( `WARNINGIF',
 `if ($1) {
   WARNING(m4_ifelse(<{$#}>,<{1}>,<{"warning"}>,<{m4_shift($*)}>));
 }')
 
-m4_debug_define(`ERROR',`window.console.error("m4___file__:m4___line__: " + $*);')
+m4_debug_define(`ERROR',`window.console.error("m4___file__:m4___line__: " + ($*));')
 
 m4_debug_define(`ASSERT',
 `if (!($1)) {
