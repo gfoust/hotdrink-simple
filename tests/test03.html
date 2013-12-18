@@ -9,20 +9,20 @@ function init() {
     .variables( {left: 0, top: 0, right: undefined, bottom: undefined,
                  width: 200, height: 200, aspect: undefined} )
 
-    .constraint( ['left', 'right', 'width'] )
-    .method( 'left', function() { return this.right - this.width; } )
-    .method( 'right', function() { return this.left + this.width; } )
-    .method( 'width', function() { return this.right - this.left; } )
+    .constraint()
+    .method( 'right, width -> left', function() { return this.right - this.width; } )
+    .method( 'left, width -> right', function() { return this.left + this.width; } )
+    .method( 'left, right -> width', function() { return this.right - this.left; } )
 
-    .constraint( ['top', 'bottom', 'height'] )
-    .method( 'top', function() { return this.height - this.bottom; } )
-    .method( 'bottom', function() { return this.top + this.height; } )
-    .method( 'height', function() { return this.bottom - this.top; } )
+    .constraint()
+    .method( 'bottom, height -> top', function() { return this.height - this.bottom; } )
+    .method( 'top, height -> bottom', function() { return this.top + this.height; } )
+    .method( 'top, bottom -> height', function() { return this.bottom - this.top; } )
 
-    .constraint( ['width', 'height', 'aspect'] )
-    .method( 'width', function() { return this.height * this.aspect; } )
-    .method( 'height', function() { return this.width / this.aspect; } )
-    .method( 'aspect', function() { return this.width / this.height; } );
+    .constraint()
+    .method( 'height, aspect -> width', function() { return this.height * this.aspect; } )
+    .method( 'width, aspect -> height', function() { return this.width / this.aspect; } )
+    .method( 'width, height -> aspect', function() { return this.width / this.height; } );
 
   hd.binders.number( document.getElementById( 'left' ), hd.m.left );
 

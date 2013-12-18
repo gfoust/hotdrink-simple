@@ -9,8 +9,8 @@
                    b: undefined, bmax: 10,
                    c: undefined, cmax: 10} )
 
-      .constraint( ['a', 'amax'] )
-      .method( 'a', function a_count() {
+      .constraint()
+      .method( 'amax -> a', function a_count() {
         for (var i= 1; i < this.amax; ++i) {
           hd.notify( i );
           for (var j= 0; j < 4000000000; ++j);
@@ -18,8 +18,8 @@
         return i;
       }, hd.async )
 
-      .constraint( ['a', 'b', 'bmax'] )
-      .method( 'b', function b_count() {
+      .constraint()
+      .method( 'a, bmax -> b', function b_count() {
         for (var i= 1; i < this.bmax; ++i) {
           hd.notify( this.a + '-' + i );
           for (var j= 0; j < 1000000000; ++j);
@@ -27,8 +27,8 @@
         return this.a + '-' + i;
       }, hd.async )
 
-      .constraint( ['b', 'c', 'cmax'] )
-      .method( 'c', function c_count() {
+      .constraint()
+      .method( 'b, cmax -> c', function c_count() {
         for (var i= 1; i < this.cmax; ++i) {
           hd.notify( this.b + '-' + i );
           for (var j= 0; j < 200000000; ++j);

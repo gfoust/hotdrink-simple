@@ -7,27 +7,27 @@
     hd.builder
       .variables( {a: undefined, b: undefined, c: 100, d: 10} )
 
-      .constraint( ['a', 'b', 'c'] )
-      .method( 'split', ['b', 'c'], function() {
+      .constraint()
+      .method( 'split', 'a -> b, c', function() {
         for (var i= 0; i < 4000000000; ++i);
         var half= Math.floor( this.a/2 )
         return [half, this.a - half];
       }, hd.async )
-      .method( 'copy', 'a', function() {
+      .method( 'copy', 'b, c -> a', function() {
         var m= Math.random() * 4000000000;
         for (var i= 0; i < m; ++i);
         return this.c - this.b;
       }, hd.async )
 
-      .constraint( ['b', 'd'] )
-      .method( 'counter', 'b', function() {
+      .constraint()
+      .method( 'counter', 'd -> b', function() {
         for (var i= 1; i < this.d; ++i) {
           hd.notify( i );
           for (var j= 0; j < 800000000; ++j);
         }
         return i;
       }, hd.async )
-      .method( 'd', function() {
+      .method( 'b -> d', function() {
         return this.b;
       } );
 

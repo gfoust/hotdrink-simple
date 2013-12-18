@@ -49,20 +49,20 @@ function init() {
     .variables( {left: 0, top: 0, right: undefined, bottom: undefined,
                  width: 200, height: 200, aspect: undefined} )
 
-    .constraint( ['left', 'right', 'width'] )
-    .method( 'left', calcLeft )
-    .method( 'right', calcRight )
-    .method( 'width', calcWidth )
+    .constraint()
+    .method( 'right, width -> left', calcLeft )
+    .method( 'left, width -> right', calcRight )
+    .method( 'left, right -> width', calcWidth )
 
-    .constraint( ['top', 'bottom', 'height'] )
-    .method( 'top', calcTop )
-    .method( 'bottom', calcBottom )
-    .method( 'height', calcHeight )
+    .constraint()
+    .method( 'bottom, height -> top', calcTop )
+    .method( 'top, height -> bottom', calcBottom )
+    .method( 'top, bottom -> height', calcHeight )
 
-    .constraint( ['width', 'height', 'aspect'] )
-    .method( 'width', calcWidthAspect )
-    .method( 'height', calcHeightAspect )
-    .method( 'aspect', calcAspect )
+    .constraint()
+    .method( 'aspect, height -> width', calcWidthAspect )
+    .method( 'aspect, width -> height', calcHeightAspect )
+    .method( 'width, height -> aspect', calcAspect )
 
   hd.bind();
 

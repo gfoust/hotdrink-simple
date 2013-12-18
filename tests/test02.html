@@ -6,14 +6,14 @@
       function init() {
         hd.builder
           .variables( {start: 25, end: 35, length: undefined} )
-          .constraint( ['start', 'end', 'length'] )
-          .method( 'start', function() {
+          .constraint()
+          .method( 'end, length -> start', function() {
             return this.end - this.length;
           } )
-          .method( 'end', function() {
+          .method( 'start, length -> end', function() {
             return this.start + this.length;
           } )
-          .method( 'length', function() {
+          .method( 'start, end -> length', function() {
             return this.end - this.start;
           } );
 

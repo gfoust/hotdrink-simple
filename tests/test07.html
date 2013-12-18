@@ -7,13 +7,13 @@
     hd.builder
       .variables( {a: undefined, b: 20, c: 100} )
 
-      .constraint( ['a', 'b', 'c'] )
-      .method( ['b', 'c'], function() {
+      .constraint()
+      .method( 'a -> b, c', function() {
         for (var i= 0; i < 4000000000; ++i);
         var half= Math.floor( this.a/2 )
         return [half, this.a - half];
       }, hd.async )
-      .method( 'a', function() {
+      .method( 'b, c -> a', function() {
         for (var i= 0; i < 400000000; ++i);
         return this.c + this.b;
       }, hd.async );
