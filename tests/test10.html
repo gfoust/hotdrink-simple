@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <title>HotDrink Test</title>
+    <script type="text/javascript" src="hotdrink.js"></script>
+    <script type="text/javascript">
+      function init() {
+        hd.builder
+          .variables( {l1: 10, r1: 10, a1: undefined,
+                       l2: 10, r2: undefined,
+                       r3: 10, a3: undefined
+                      }
+                    );
+
+        hd.m.a2= 100;
+        hd.m.l3= 10;
+
+        hd.builder
+          .constraint()
+          .method( 'l1, r1 -> a1', function() {
+            return this.l1 * this.r1;
+          } )
+          .method( 'a1, r1 -> l1', function() {
+            return this.a1 / this.r1;
+          } )
+          .method( 'a1, l1 -> r1', function() {
+            return this.a1 / this.l1;
+          } )
+
+          .constraint()
+          .method( 'a2, r2 -> l2', function() {
+            return this.a2 / this.r2;
+          } )
+          .method( 'a2, l2 -> r2', function() {
+            return this.a2 / this.l2;
+          } )
+
+          .constraint()
+          .method( 'l3, r3 -> a3', function() {
+            return this.l3 * this.r3;
+          } )
+          .method( 'a3, l3 -> r3', function() {
+            return this.a3 / this.l3;
+          } );
+
+        hd.bind();
+      }
+    </script>
+  </head>
+  <body onload="init()">
+    <p>
+      Models with constants.
+    </p>
+    <table>
+      <tr>
+        <td>Left:</td>
+        <td><input type="text" data-bind="number: l1"/></td>
+        <td>Right:</td>
+        <td><input type="text" data-bind="number: r1"/></td>
+        <td>Area:</td>
+        <td><input type="text" data-bind="number: a1"/></td>
+      </tr>
+      <tr>
+        <td>Left:</td>
+        <td><input type="text" data-bind="number: l2"/></td>
+        <td>Right:</td>
+        <td><input type="text" data-bind="number: r2"/></td>
+        <td>Area:</td>
+        <td>100</td>
+      </tr>
+      <tr>
+        <td>Left:</td>
+        <td>10</td>
+        <td>Right:</td>
+        <td><input type="text" data-bind="number: r3"/></td>
+        <td>Area:</td>
+        <td><input type="text" data-bind="number: a3"/></td>
+      </tr>
+    </table>
+  </body>
+</html>
