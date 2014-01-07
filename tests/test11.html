@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title>HotDrink Test</title>
+    <script type="text/javascript" src="hotdrink.js"></script>
+    <script type="text/javascript">
+      function init() {
+        hd.builder
+          .variables( {a: 1, b: 10, c: 20} );
+
+        hd.builder
+          .constraint()
+          .method( 'a, b -> b', function() {
+            for (var i= 0; i < 2000000000; ++i);
+            return this.a < this.b ? this.b : this.a;
+          } )
+          .method( 'a, b -> a', function() {
+            for (var i= 0; i < 2000000000; ++i);
+            return this.a < this.b ? this.a : this.b;
+          } )
+
+          .constraint()
+          .method( 'b, c -> c', function() {
+            for (var i= 0; i < 2000000000; ++i);
+            return this.b < this.c ? this.c : this.b;
+          } )
+          .method( 'b, c -> b', function() {
+            for (var i= 0; i < 2000000000; ++i);
+            return this.b < this.c ? this.b : this.c;
+          } );
+
+        hd.bind();
+
+        hd.forceAsync();
+      }
+    </script>
+    <style type="text/css">
+      .pending { background: #ccc; }
+      .source  { background: #ffc; }
+    </style>
+  </head>
+  <body onload="init()">
+    <p>
+      Self loops
+    </p>
+    <table>
+      <tr>
+        <td><input type="text" data-bind="number: a, css: a"/></td>
+        <td>&lt;</td>
+        <td><input type="text" data-bind="number: b, css: b"/></td>
+        <td>&lt;</td>
+        <td><input type="text" data-bind="number: c, css: c"/></td>
+      </tr>
+    </table>
+  </body>
+</html>
