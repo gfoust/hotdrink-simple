@@ -52,7 +52,7 @@ function init() {
     .constraint()
     .method( 'right, width -> left', calcLeft )
     .method( 'left, width -> right', calcRight )
-    .method( 'left, right -> width', calcWidth )
+    .method( 'left, right -> width', hd.async( calcWidth ) )
 
     .constraint()
     .method( 'bottom, height -> top', calcTop )
@@ -60,13 +60,12 @@ function init() {
     .method( 'top, bottom -> height', calcHeight )
 
     .constraint()
-    .method( 'aspect, height -> width', calcWidthAspect )
+    .method( 'aspect, height -> width', hd.async( calcWidthAspect ) )
     .method( 'aspect, width -> height', calcHeightAspect )
     .method( 'width, height -> aspect', calcAspect )
 
   hd.bind();
 
-  hd.forceAsync();
 }
     </script>
     <style type="text/css">

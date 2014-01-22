@@ -10,31 +10,31 @@
                    c: undefined, cmax: 10} )
 
       .constraint()
-      .method( 'amax -> a', function a_count() {
+      .method( 'amax -> a', hd.async( function() {
         for (var i= 1; i < this.amax; ++i) {
           hd.notify( i );
           for (var j= 0; j < 4000000000; ++j);
         }
         return i;
-      }, hd.async )
+      } ) )
 
       .constraint()
-      .method( 'a, bmax -> b', function b_count() {
+      .method( 'a, bmax -> b', hd.async( function() {
         for (var i= 1; i < this.bmax; ++i) {
           hd.notify( this.a + '-' + i );
           for (var j= 0; j < 1000000000; ++j);
         }
         return this.a + '-' + i;
-      }, hd.async )
+      } ) )
 
       .constraint()
-      .method( 'b, cmax -> c', function c_count() {
+      .method( 'b, cmax -> c', hd.async( function() {
         for (var i= 1; i < this.cmax; ++i) {
           hd.notify( this.b + '-' + i );
           for (var j= 0; j < 200000000; ++j);
         }
         return this.b + '-' + i;
-      }, hd.async )
+      } ) )
 
     hd.bind();
   }

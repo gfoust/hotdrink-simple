@@ -8,25 +8,25 @@
       .variables( {a: undefined, b: undefined, c: 100, d: 10} )
 
       .constraint()
-      .method( 'split', 'a -> b, c', function() {
+      .method( 'split', 'a -> b, c', hd.async( function() {
         for (var i= 0; i < 4000000000; ++i);
         var half= Math.floor( this.a/2 )
         return [half, this.a - half];
-      }, hd.async )
-      .method( 'copy', 'b, c -> a', function() {
+      }, 2 ) )
+      .method( 'copy', 'b, c -> a', hd.async( function() {
         var m= Math.random() * 4000000000;
         for (var i= 0; i < m; ++i);
         return this.c - this.b;
-      }, hd.async )
+      } ) )
 
       .constraint()
-      .method( 'counter', 'd -> b', function() {
+      .method( 'counter', 'd -> b', hd.async( function() {
         for (var i= 1; i < this.d; ++i) {
           hd.notify( i );
           for (var j= 0; j < 800000000; ++j);
         }
         return i;
-      }, hd.async )
+      } ) )
       .method( 'b -> d', function() {
         return this.b;
       } );

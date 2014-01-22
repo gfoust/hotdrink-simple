@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <title>HotDrink Test</title>
+    <script type="text/javascript" src="hotdrink.js"></script>
+    <script type="text/javascript">
+    {
+
+      var count= hd.async( function count() {
+        for (var i= 1; i < this.max; ++i) {
+          hd.notify( i + '/' + this.max );
+          for (var j= 0; j < 2000000000; ++j);
+        }
+        return i + '/' + this.max;
+      } );
+
+      function Counter( console ) {
+        this.version= 0;
+        this.console= console;
+      }
+
+      Counter.prototype.toString= function () { return "Counter" }
+
+      Counter.prototype.go= function go() {
+        var promise= count.call( {max: 4 + Math.floor(Math.random() * 7)} );
+        promise.version= ++this.version;
+        promise.addSubscriber( this );
+      }
+
+      Counter.prototype.onNext= function onNext( val, promise ) {
+        var p= document.createElement( 'p' );
+        p.className= 'next';
+        p.appendChild( document.createTextNode( promise.version + ': ' + val ) );
+        this.console.insertBefore( p, this.console.firstChild );
+      }
+
+      Counter.prototype.onCompleted= function onCompleted( val, promise ) {
+        var p= document.createElement( 'p' );
+        p.className= 'completed';
+        p.appendChild( document.createTextNode( promise.version + ': ' + val ) );
+        this.console.insertBefore( p, this.console.firstChild );
+      }
+
+      Counter.prototype.onError= function() {};
+
+      Counter.prototype.clear= function clear() {
+        while (this.console.lastChild) {
+          this.console.removeChild( this.console.lastChild );
+        }
+      }
+
+      var counter;
+
+      function init() {
+        hd.utility.setPoolSize( 3 );
+        counter= new Counter( document.getElementById( 'console' ) );
+      }
+
+      function update( val ) {
+        var n= Number( val );
+        if (! isNaN( n )) {
+          hd.utility.setPoolSize( n );
+        }
+      }
+
+    }
+    </script>
+    <style type="text/css">
+      .next  { color: #559; }
+  .completed { color: #595;
+    </style>
+  </head>
+  <body onload="init()">
+    <p>
+      Max: <input type="text" value="3" oninput="update(this.value)"/>
+    </p>
+    <button onclick="counter.go()">Go</button>
+    <button onclick="counter.clear()">Clear</button>
+    <div id="console">
+    </div>
+  </body>
+</html>
