@@ -9,24 +9,24 @@
 
         hd.builder
           .constraint()
-          .method( 'a, b -> b', function() {
+          .method( 'a, b -> b', hd.async( function() {
             for (var i= 0; i < 2000000000; ++i);
             return this.a < this.b ? this.b : this.a;
-          } )
-          .method( 'a, b -> a', function() {
+          } ) )
+          .method( 'a, b -> a', hd.async( function() {
             for (var i= 0; i < 2000000000; ++i);
             return this.a < this.b ? this.a : this.b;
-          } )
+          } ) )
 
           .constraint()
-          .method( 'b, c -> c', function() {
+          .method( 'b, c -> c', hd.async( function() {
             for (var i= 0; i < 2000000000; ++i);
             return this.b < this.c ? this.c : this.b;
-          } )
-          .method( 'b, c -> b', function() {
+          } ) )
+          .method( 'b, c -> b', hd.async( function() {
             for (var i= 0; i < 2000000000; ++i);
             return this.b < this.c ? this.b : this.c;
-          } );
+          } ) );
 
         hd.bind();
       }

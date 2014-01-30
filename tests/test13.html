@@ -1,0 +1,121 @@
+<html>
+  <head>
+    <title>HotDrink Test</title>
+    <script type="text/javascript" src="hotdrink.js"></script>
+    <script type="text/javascript">
+      {
+        var oneday_ms= 1000 * 60 * 60 * 24;
+
+        var today= new Date();
+        today.setHours( 0, 0, 0, 0 );
+
+        function init() {
+          hd.builder
+
+            .variables( {checkin: today, nights: 3, checkout: undefined} )
+            .constraint()
+            .method( 'checkin, checkout -> nights', function() {
+              var checkout_ms= this.checkout.getTime();
+              var checkin_ms= this.checkin.getTime();
+              return Math.floor( (checkout_ms - checkin_ms) / oneday_ms );
+            } )
+            .method( 'checkin, nights -> checkout', function() {
+              var checkin_ms= this.checkin.getTime();
+              return new Date( checkin_ms + oneday_ms*this.nights );
+            } )
+            .method( 'checkout, nights -> checkin', function() {
+              var checkout_ms= this.checkout.getTime();
+              return new Date( checkout_ms - oneday_ms*this.nights );
+            } )
+
+            .variables( {rate: 100, hotel_cost: undefined} )
+            .constraint()
+            .method( 'nights, rate -> hotel_cost', function() {
+              return this.nights * this.rate;
+            } )
+
+            .variables( {miles: 100, gas: 3.5, car_cost: undefined} )
+            .constraint()
+            .method( 'miles, gas -> car_cost', hd.delay( 5000, function() {
+              return this.miles * this.gas;
+            } ) )
+
+            .variables( {use_hotel: true, use_car: true, total: undefined} )
+            .constraint()
+            .method( 'use_hotel, use_car, hotel_cost, car_cost -> total', function() {
+              var total= 0;
+              if (this.use_car) {
+                total+= this.car_cost;
+              }
+              if (this.use_hotel) {
+                total+= this.hotel_cost;
+              }
+              return total;
+            } );
+
+          hd.system.addOutput( hd.m.total );
+          hd.bind();
+        }
+      }
+    </script>
+    <style type="text/css">
+      .disabled { color: #999 }
+      td.pending { background: no-repeat right center url(spinner.gif) }
+     </style>
+  </head>
+  <body onload="init()">
+    <p>
+    </p>
+    <table>
+      <tr>
+        <td>Check-In:</td>
+        <td><input type="text" data-bind="date: checkin, css: checkin, disabled: checkin.disabled"/></td>
+        <td width="100">&nbsp;</td>
+        <td>Miles:</td>
+        <td><input type="text" data-bind="number: miles, css: miles, disabled: miles.disabled"/></td>
+      </tr>
+      <tr>
+        <td>Check-Out:</td>
+        <td><input type="text" data-bind="date: checkout, css: checkout, disabled: checkout.disabled"/></td>
+        <td>&nbsp;</td>
+        <td>Gas Price:</td>
+        <td><input type="text" data-bind="number: gas, css: gas, disabled: gas.disabled"/></td>
+      <tr>
+        <td>Nights:</td>
+        <td><input type="text" data-bind="number: nights, css: nights, disabled: nights.disabled"/></td>
+        <td>&nbsp;</td>
+        <td>Cost:</td>
+        <td data-bind="css: {pending: car_cost.pending}"><span data-bind="text: car_cost, css: car_cost"></span></td>
+      </tr>
+      <tr>
+        <td>Room rate:</td>
+        <td><input type="text" data-bind="number: rate, css: rate, disabled: rate.disabled"/></td>
+      </tr>
+      <tr>
+        <td>Cost:</td>
+        <td data-bind="css: {pending: hotel_cost.pending}"><span data-bind="text: hotel_cost, css: hotel_cost"></span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <input type="checkbox" data-bind="checkbox: use_hotel, disabled: use_hotel.disabled" id="hotel_cbx"/>
+          <label for="hotel_cbx">Use hotel costs</label>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <input type="checkbox" data-bind="checkbox: use_car, disabled: use_car.disabled" id="car_cbx"/>
+          <label for="car_cbx">Use car costs</label>
+        </td>
+      </tr>
+      <tr>
+        <td>Total costs:</td>
+        <td data-bind="css: {pending: total.pending}">
+          <span data-bind="text: total"></span>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
